@@ -1,8 +1,56 @@
 window.addEventListener("DOMContentLoaded", () => {
-    switchTab('signup');
-    const settings = document.querySelector('.settings');
-    if (settings) settings.classList.add('hidden');
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const account = getSavedAccount();
+
+    if (isLoggedIn && account) {
+        renderAuthenticatedView(account);
+    } else {
+        switchTab('signup');
+        const settings = document.querySelector('.settings');
+        if (settings) settings.classList.add('hidden');
+    }
 });
+
+function getSavedAccount() {
+    const saved = localStorage.getItem('currentAccount');
+    if (!saved) return null;
+
+    try {
+        return JSON.parse(saved);
+    } catch (error) {
+        console.error('Failed to parse saved account from localStorage', error);
+        return null;
+    }
+}
+
+function markLoggedIn(value) {
+    localStorage.setItem('isLoggedIn', value ? 'true' : 'false');
+}
+
+function renderAuthenticatedView(account) {
+    const auth = document.querySelector('.auth');
+    const settings = document.querySelector('.settings');
+    if (auth) auth.classList.add('hidden');
+    if (settings) {
+        settings.classList.remove('hidden');
+        settings.classList.add('visible');
+    }
+
+    const displayUsername = document.getElementById('displayUsername');
+    if (displayUsername) displayUsername.innerText = account.username || '';
+
+    const dispUser = document.getElementById('dispUser');
+    if (dispUser) dispUser.innerText = account.username || 'Username';
+
+    const kingdomLabel = document.getElementById('kingdomLabel');
+    if (kingdomLabel) kingdomLabel.innerText = account.kingdom || account.choice || '';
+
+    const emailInput = document.getElementById('emailInput');
+    if (emailInput) emailInput.value = account.email || '';
+
+    const aboutInput = document.getElementById('aboutInput');
+    if (aboutInput) aboutInput.value = account.bio || '';
+}
 
 function switchTab(type) {
     const signForm = document.getElementById('signForm');
@@ -22,7 +70,6 @@ function switchTab(type) {
         hLogin.classList.add('active');
     }
 }
-
 function signUp() {
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('pass').value;
@@ -41,8 +88,10 @@ function signUp() {
     };
 
     localStorage.setItem('currentAccount', JSON.stringify(account));
-    alert('Account created successfully! Please log in.');
-    switchTab('login');
+    markLoggedIn(true);
+    alert('Account created successfully! You are now logged in.');
+    renderAuthenticatedView(account);
+    showPopUp();
 }
 
 function logIn() {
@@ -59,8 +108,9 @@ function logIn() {
     const account = JSON.parse(saved);
     console.log('Profile logIn', { usernameLogin, passwordLogin, savedAccount: account });
     if (account.username === usernameLogin && account.password === passwordLogin) {
+        markLoggedIn(true);
         alert('Login successful!');
-        showPopUp();
+        renderAuthenticatedView(account);
     } else {
         alert('Incorrect username or password. Please try again.');
     }
@@ -124,7 +174,113 @@ function showPopUp() {
     const auth = document.querySelector('.auth');
     if (auth) auth.classList.add('hidden');
 }
+function hideSettings() {
+    const settings = document.querySelector('.settings');
+    if (settings) {
+        settings.classList.remove('visible');
+        settings.classList.add('hidden');
+    }
+}
 
+function signOut() {
+    markLoggedIn(false);
+    localStorage.removeItem('currentAccount');
+    closePopUp();
+    hideSettings();
+    const auth = document.querySelector('.auth');
+    if (auth) auth.classList.remove('hidden');
+    alert('You have signed out.');
+    switchTab('login');
+}
+
+function deleteAccount() {
+    markLoggedIn(false);
+    localStorage.removeItem('currentAccount');
+    closePopUp();
+    hideSettings();
+    const auth = document.querySelector('.auth');
+    if (auth) auth.classList.remove('hidden');
+    alert('Account deleted. Please sign up again.');
+    switchTab('signup');
+}
+
+function saveAccountChanges(account) {
+    localStorage.setItem('currentAccount', JSON.stringify(account));
+}
+
+function updateAccountField(field, value) {
+    const account = getSavedAccount();
+    if (!account) return;
+    account[field] = value;
+    saveAccountChanges(account);
+    renderAuthenticatedView(account);
+}
+
+function changeUsername() {
+    const newUsername = prompt('Enter your new username:');
+    if (!newUsername) return;
+    updateAccountField('username', newUsername.trim());
+    alert('Username updated.');
+}
+
+function changePassword() {
+    const newPassword = prompt('Enter your new password:');
+    if (!newPassword) return;
+    updateAccountField('password', newPassword);
+    alert('Password updated.');
+}
+
+function clearAbout() {
+    const aboutInput = document.getElementById('aboutInput');
+    if (aboutInput) aboutInput.value = '';
+    updateAccountField('bio', '');
+    alert('Bio cleared.');
+}
+
+function saveEmail() {
+    const emailInput = document.getElementById('emailInput');
+    if (!emailInput) return;
+    const account = getSavedAccount();
+    if (!account) {
+        alert('No account found. Please sign up or log in.');
+        return;
+    }
+    account.email = emailInput.value.trim();
+    saveAccountChanges(account);
+    renderAuthenticatedView(account);
+    alert('Email saved.');
+}
+
+function clearEmail() {
+    const emailInput = document.getElementById('emailInput');
+    if (emailInput) emailInput.value = '';
+    updateAccountField('email', '');
+    alert('Email deleted.');
+}
+
+function saveAbout() {
+    const aboutInput = document.getElementById('aboutInput');
+    if (!aboutInput) return;
+    updateAccountField('bio', aboutInput.value.trim());
+    alert('Bio saved.');
+}
+
+function changeKingdom() {
+    const kingdomSelect = document.getElementById('kingdomSelect');
+    if (!kingdomSelect) return;
+    const kingdom = kingdomSelect.value;
+    if (!kingdom) return;
+    const account = getSavedAccount();
+    if (!account) {
+        alert('No account found. Please sign up or log in.');
+        return;
+    }
+    account.kingdom = kingdom;
+    account.choice = kingdom;
+    saveAccountChanges(account);
+    renderAuthenticatedView(account);
+    alert('Kingdom updated.');
+}
 // close popup
 function closePopUp() {
     const modal = document.getElementById("popup");
@@ -151,22 +307,3 @@ document.getElementById('clearAvatar').addEventListener('click', function() {
     fileInput.value = "";
 });
 
-function simulateLogin() {
-     const dummy = {
-          username: "Danaya",
-          email: "danaya@example.com",
-          bio: "Tagapangalaga ako ng brilyante",
-          kingdom: "Sapiro"
-     };
-     const usernameLogin = document.getElementById('usernameLogin');
-     if (usernameLogin) usernameLogin.value = dummy.username;
-     const displayUsername = document.getElementById('displayUsername');
-     if (displayUsername) displayUsername.innerText = dummy.username;
-     const emailInput = document.getElementById('emailInput');
-     if (emailInput) emailInput.value = dummy.email;
-     const aboutInput = document.getElementById('aboutInput');
-     if (aboutInput) aboutInput.value = dummy.bio;
-     const kingdomLabel = document.getElementById('kingdomLabel');
-     if (kingdomLabel) kingdomLabel.innerText = dummy.kingdom;
-}
-window.onload = simulateLogin;

@@ -75,7 +75,7 @@
                 <label> Password: </label>
                 <input id = "passLogin" type="password" placeholder="Password">
             </div>
-            <button class = "submit-btn" onclick = "logIn()">Log In</button>
+            <button class="submit-btn" onclick="logIn()">Log In</button>
         </div>
     </div>
 
@@ -98,10 +98,10 @@
     <div class ="container">
         <div class ="sidebar">
             <h3 id = "dispUser" style = "margin: 5px 0;">Username</h3>
-
+            <img id="avatar" class="avatar" src="" alt="Profile avatar">
             <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleFileSelect(event)">
-            <button id="change-btn" onclick="document.getElementById('fileInput').click()">Upload New Picture</button>
-             <button id="change-btn" onclick="clearAvatar()">Delete Avatar</button>
+            <button class="change-btn" onclick="document.getElementById('fileInput').click()">Upload New Picture</button>
+            <button id="clearAvatar" class="change-btn" onclick="clearAvatar()">Delete Avatar</button>
         </div>
 
         <div class ="mainc">
@@ -132,13 +132,11 @@
             <label>Password:</label>
             <input type="password" id="passwordInput" placeholder="Enter your password">
                 <button id="changePassword" onclick="changePassword()">Change Password</button>
-                <button id="clearPassword" onclick="clearPassword()">Delete Account</button>
-            
             <div class ="bye">
-                <button class ="change-btn delete">Delete Account</button>
-                <button class = "change-btn" style = "padding: 15px 40px;">Save Change</button>
+                <button type="button" class ="change-btn delete" onclick="deleteAccount()">Delete Account</button>
+                <button type="button" class = "change-btn" onclick="signOut()" style = "padding: 15px 40px;">Sign Out</button>
             </div>
-
+            
             </div>
         </div>
     </div>
