@@ -306,4 +306,3 @@ document.getElementById('clearAvatar').addEventListener('click', function() {
     avatar.src = "";
     fileInput.value = "";
 });
-
