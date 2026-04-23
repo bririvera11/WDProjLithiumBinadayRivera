@@ -4,11 +4,13 @@
   padding: 0;
   box-sizing: border-box;
 }
+/* Root variables for consistent theming */
 :root{
     --primary-color: #e7d2a6;
     --secondary-color: hsl(28, 48%, 38%);
     --hover-color: hsla(28, 48%, 39%, 0.217);
 }
+/* Styles the body of the webpage */
 body{
   background: url('../assets/ewan.png');
   background-size: cover; 
@@ -17,7 +19,7 @@ body{
   flex-direction: column;
   align-items: center;
 }
-
+/* It's also the standard style for the body and the overall html */
 html, body{
     height: 100%;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -26,14 +28,14 @@ html, body{
     background-size:cover;
     background-repeat: repeat;
 }
-
+/* Styles the title of the webpage */
 .title {
     text-align: center;
     margin: 50px 0;
     letter-spacing: 3px;
     color: #9a6a2f;
 }
-
+/* Styles the navigation bar */
 .navbar ul{
     display: flex;
     gap: 14px;
@@ -71,16 +73,19 @@ html, body{
     margin-top: 10px;
     margin-left: 10px;
 }
+/* Styles the p elements inside the class "content-wrap" */
 .content-wrap p{
   font-size: 18px;
   line-height: 1.6;
   margin-bottom: 20px;
   position: relative;
 }
+/* Styles the h1 elements inside the class "content-wrap" */
 .content-wrap h1{
   font-size: 32px;
   margin-bottom: 20px;
 }
+/* Styles the buttons */
 .themes-btn{
   background: #e7d2a6;
   color: hsl(28, 48%, 38%);
@@ -97,6 +102,7 @@ html, body{
 .themes-btn:hover{
   background-color: hsla(28, 48%, 39%, 0.217);
 }
+/* Styles the "content-wrap" */
 .content-wrap {
   margin-top: 140px;
   width: 100%;
@@ -113,6 +119,7 @@ html, body{
   background: rgba(255, 255, 255, 0.5);
   padding: 20px;
 }
+/* Styles the class "auth" */
 .auth{
   background: white;
   border-radius: 25px;
@@ -122,18 +129,11 @@ html, body{
   margin: 0 auto;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
-.auth{
-  background: white;
-  border-radius: 25px;
-  padding: 40px;
-  width: 900px;
-  height: 500px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
 .auth h2{
     text-align: center;
     margin-bottom: 30px;
 }
+/* Styles the class "input-cnt" and its other elements */
 .input-cnt{
   display: flex;
   flex-direction: center;
@@ -154,6 +154,7 @@ html, body{
   opacity: 0.6;
   color: white;
 }
+/* Styles the submit button */
 .submit-btn{
   background: rgb(133, 93, 93);
   color: white;
@@ -165,9 +166,11 @@ html, body{
   display: block;
   margin: auto;
 }
+/* Styles the class "hidden" */
 .hidden{
   display: none;
 }
+/* Styles the popup */
 .popup-overlay{
   position: fixed;
   inset: 0;
@@ -214,12 +217,14 @@ html, body{
   background: var(--secondary-color);
   color: white;
 }
+/* Styles the headers */
 .headers{
   display: flex;
   justify-content: space-between;
   margin-bottom: 30px;
   color: white;
 }
+/* Styles "h-btn" and its active state */
 .h-btn{
   flex: 1;
   border: none;
@@ -234,6 +239,7 @@ html, body{
 .h-btn.active{
   background: var(--secondary-color);
 }
+/* styles the inputs for the settings page */
 input[type="text"],
 input[type="password"]{
   background-color: var(--primary-color);
@@ -246,6 +252,7 @@ input[type="password"]{
 input::placeholder{
   color: #fff;
 }
+/* Styles the class "options" */
 .options{
   background: var(--primary-color);
   padding: 15px;
@@ -254,17 +261,7 @@ input::placeholder{
   flex-direction: column;
   gap: 10px;
 }
-.submit-btn{
-  background: var(--secondary-color);
-  color: white;
-  border: none;
-  padding: 12px;
-  border-radius: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  display: block;
-  margin: auto;
-}
+/* Styles the settings class */
 .settings{
   display: none;
   margin: 20px auto 0;
@@ -347,12 +344,14 @@ input::placeholder{
   color: hsl(28, 48%, 39%);
   border: 1px solid hsl(28, 48%, 39%);
 }
+/* Styles the container class inside the settings */
 .container{
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
 }
+/* Styles the avatar image */
 .avatar{
   width: 120px;
   height: 120px;
@@ -360,6 +359,7 @@ input::placeholder{
   object-fit: cover;
   margin-bottom: 20px;
 }
+/* Styles the change buttons for the avatar */
 .change-btn{
   background: var(--secondary-color);
   color: white;
@@ -376,9 +376,11 @@ input::placeholder{
   padding: 10px 20px;
   border-radius: 15px;
 }
+/* Styles such that it fits all screen sizes */
 .mainc{
   width: 100%;
 }
+/* Changes that makes the webpage responsive and mobile-friendly */
 @media (max-width: 768px) {
   
   .content-wrap{
@@ -412,7 +414,7 @@ input::placeholder{
     align-items: center;
   }
 }
-
+/* Styles the footer */
 .footer{
     display:flex;
     justify-content:space-between;
@@ -454,6 +456,7 @@ input::placeholder{
     color:hsl(28,48%,39%);
     text-decoration:underline;
 }
+/* The github icons in the footer */
 .github-icon{
     width:30px;
     height:30px;
